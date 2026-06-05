@@ -1,0 +1,28 @@
+name: Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Package plugin
+        run: |
+          mkdir luatools
+          cp -r backend public .millennium plugin.json readme.md luatools/
+          zip -r luatools.zip luatools
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: luatools.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
