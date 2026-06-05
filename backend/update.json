@@ -1,7 +1,8 @@
 {
   "github": {
-    "owner": "piqseu",
+    "owner": "DarkAssassinUA",
     "repo": "ltsteamplugin",
-    "asset_name": "ltsteamplugin.zip"
+    "asset_name": "ltsteamplugin.zip",
+    "tag_prefix": "v"
   }
 }
