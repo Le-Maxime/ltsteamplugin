@@ -130,7 +130,7 @@ local function _launch_async_download(appid, url, dest_path, extract_dir)
     if is_windows then
         local ps1_path = fs.join(paths.get_plugin_dir(), "backend", "scripts", "downloader.ps1")
         local cmd = string.format(
-            'powershell -WindowStyle Hidden -Command "Start-Process -FilePath powershell -WindowStyle Hidden -ArgumentList \'-ExecutionPolicy Bypass -File \\"%s\\" -Url \\"%s\\" -DestPath \\"%s\\" -ExtractDir \\"%s\\" -StateFile \\"%s\\"\'"',
+            'powershell -WindowStyle Hidden -Command "Start-Process -FilePath powershell -WindowStyle Hidden -ArgumentList \'-ExecutionPolicy Bypass -File \'\'%s\'\' -Url \'\'%s\'\' -DestPath \'\'%s\'\' -ExtractDir \'\'%s\'\' -StateFile \'\'%s\'\'\'"',
             ps1_path, url, dest_path, extract_dir, state_file
         )
         m_utils.exec(cmd)
@@ -213,8 +213,11 @@ function downloads.start_add_via_luatools(appid)
             if string.lower(name) == "morrenus" then
                 local status_url = "https://hubcapmanifest.com/api/v1/status/" .. tostring(appid) .. "?api_key=" .. tostring(morrenus_api_key)
                 local s_resp = http_client.get(status_url, { headers = { ["User-Agent"] = config.USER_AGENT }, timeout = 5 })
-                if s_resp and s_resp.status == success_code then
-                    success = true
+                if s_resp and s_resp.status == success_code and s_resp.body then
+                    local data = utils.decode_json(s_resp.body)
+                    if data and data.status ~= "not_found" then
+                        success = true
+                    end
                 end
             else
                 local resp = http_client.head(url, { headers = { ["User-Agent"] = config.USER_AGENT }, timeout = 5 })
@@ -286,8 +289,11 @@ function downloads.check_apis_for_app(appid)
         if string.lower(name) == "morrenus" then
             local status_url = "https://hubcapmanifest.com/api/v1/status/" .. tostring(appid) .. "?api_key=" .. tostring(morrenus_api_key)
             local resp = http_client.get(status_url, { headers = { ["User-Agent"] = config.USER_AGENT }, timeout = 5 })
-            if resp and resp.status == success_code then
-                available = true
+            if resp and resp.status == success_code and resp.body then
+                local data = utils.decode_json(resp.body)
+                if data and data.status ~= "not_found" then
+                    available = true
+                end
             end
         else
             local success = false

@@ -63,7 +63,7 @@ function fixes.apply_game_fix(appid, download_url, install_path, fix_type, game_
     if is_windows then
         local ps1_path = fs.join(paths.get_plugin_dir(), "backend", "scripts", "downloader.ps1")
         local cmd = string.format(
-            'powershell -WindowStyle Hidden -Command "Start-Process -FilePath powershell -WindowStyle Hidden -ArgumentList \'-ExecutionPolicy Bypass -File \\"%s\\" -Url \\"%s\\" -DestPath \\"%s\\" -ExtractDir \\"%s\\" -StateFile \\"%s\\"\'"',
+            'powershell -WindowStyle Hidden -Command "Start-Process -FilePath powershell -WindowStyle Hidden -ArgumentList \'-ExecutionPolicy Bypass -File \'\'%s\'\' -Url \'\'%s\'\' -DestPath \'\'%s\'\' -ExtractDir \'\'%s\'\' -StateFile \'\'%s\'\'\'"',
             ps1_path, download_url, dest_zip, install_path, state_file
         )
         m_utils.exec(cmd)

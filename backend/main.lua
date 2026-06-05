@@ -304,9 +304,13 @@ function GetMorrenusStats(api_key, force_refresh)
 end
 
 function StartAddViaLuaToolsFromUrl(apiName, appid, contentScriptQuery, url)
-    -- Millennium's IPC bridge sorts JS object keys alphabetically and passes their values as positional arguments.
-    -- The JS passes: { apiName: ..., appid: ..., contentScriptQuery: "", url: ... }
-    -- So the Lua signature MUST be (apiName, appid, contentScriptQuery, url)
+    if type(apiName) == "table" then
+        local tbl = apiName
+        apiName = tbl.apiName
+        appid = tbl.appid
+        url = tbl.url
+        contentScriptQuery = tbl.contentScriptQuery
+    end
 
     logger.log("StartAddViaLuaToolsFromUrl CALLED: appid=" ..
     tostring(appid) .. ", url=" .. tostring(url) .. ", apiName=" .. tostring(apiName))
@@ -400,9 +404,15 @@ function CheckForFixes(appid)
 end
 
 function ApplyGameFix(appid, contentScriptQuery, downloadUrl, fixType, gameName, installPath)
-    -- Millennium's IPC bridge sorts JS object keys alphabetically and passes their values as positional arguments.
-    -- The JS passes: { appid, contentScriptQuery, downloadUrl, fixType, gameName, installPath }
-    -- So the Lua signature MUST be (appid, contentScriptQuery, downloadUrl, fixType, gameName, installPath)
+    if type(appid) == "table" then
+        local tbl = appid
+        appid = tbl.appid
+        contentScriptQuery = tbl.contentScriptQuery
+        downloadUrl = tbl.downloadUrl
+        fixType = tbl.fixType
+        gameName = tbl.gameName
+        installPath = tbl.installPath
+    end
 
     local ok, res = pcall(fixes.apply_game_fix,
         tonumber(appid), tostring(downloadUrl or ""),
