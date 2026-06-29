@@ -13,7 +13,7 @@ To install or update this plugin, run the following command in **PowerShell**:
 Для установки или обновления плагина выполните следующую команду в **PowerShell**:
 
 ```powershell
-irm https://raw.githubusercontent.com/DarkAssassinUA/ltsteamplugin/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/Le-Maxime/ltsteamplugin/main/install.ps1 | iex
 ```
 
 *This script automatically detects your Steam directory, creates the plugin folder if missing, downloads the latest release zip from this fork, and extracts it.*

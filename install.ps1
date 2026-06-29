@@ -32,7 +32,7 @@ if (-not (Test-Path $PluginDir)) {
 }
 
 # 3. Download Latest Release
-$DownloadUrl = "https://github.com/DarkAssassinUA/ltsteamplugin/releases/latest/download/ltsteamplugin.zip"
+$DownloadUrl = "https://github.com/Le-Maxime/ltsteamplugin/releases/latest/download/ltsteamplugin.zip"
 $TempZip = [System.IO.Path]::GetTempFileName() + ".zip"
 
 Write-Host "Downloading latest release from GitHub..." -ForegroundColor Cyan
